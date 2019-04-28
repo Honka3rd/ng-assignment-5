@@ -1,0 +1,46 @@
+<div class="zippy">
+  <div 
+    class="zippy-heading"
+    [class.zippy-expanded]='isSelected'
+    (click)='onExpandToggle()'
+  >
+  <!--important: class dynamic binding-->
+    {{title}}
+    <span class='glyphicon'
+      [ngClass] = "{
+        'glyphicon-chevron-up': isSelected,
+        'glyphicon-chevron-down': !isSelected
+      }"
+    ></span>
+    <!--glyphicon is valid in bootstrap 3-->
+  </div>
+  <div 
+    class="zippy-body"
+    *ngIf = 'isSelected'
+    (click)='clickBlank()'
+  >
+    <ng-content></ng-content>
+    <!--inject markup from outside-->
+      <!--../../assets/imgs/-->
+        <div class="ui items">
+          <div class="item"
+            *ngFor='let a of avatars;index as i'
+            [ngClass]='{
+              "red-border":selectedIdx==i,
+              "normal-border":selectedIdx!=i
+            }'
+            (click)='onClickItem(i,$event)'
+          >
+            <a class="ui tiny image">
+              <img src="../../assets/imgs/{{a?.name}}.jpg">
+            </a>
+            <div class="content">
+              <a class="header">Description</a>
+              <div class="description">
+                <p>{{a?.desc}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
